@@ -12,8 +12,8 @@
         "dest": "/" 
       },
       {
-        "src": "/images/(.*)", 
-        "dest": "/images/$1" 
+        "src": "/api/images/(.*)", 
+        "dest": "/api/images/$1" 
       }
      
     ]
