@@ -11,7 +11,6 @@ dotenv.config();
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
-    // Obtenez le nom de la base de données à partir de l'objet de connexion Mongoose
     const databaseName = mongoose.connection.name;
     console.log(`Connexion à la base de données '${databaseName}' réussie !`);
   })
@@ -19,8 +18,6 @@ mongoose.connect(process.env.MONGODB_URI)
 
 app.use(express.json());
 
-// Header d'accès global à l'API
-//header d'accès global à l'API
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -34,8 +31,8 @@ app.use((req, res, next) => {
   next();
 });
 
+// Définissez le chemin du répertoire images pour servir des fichiers statiques
 app.use('/images', express.static(path.join(__dirname, 'images')));
-
 
 app.use('/api/', saucesRoutes);
 
