@@ -12,6 +12,7 @@
         "dest": "/" 
       }
     ],
+    
     "rewrites": [
       {
         "source": "/images/(.*)",
