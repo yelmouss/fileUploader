@@ -2,10 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const saucesRoutes = require('./routes/Images');
+var cors = require('cors')
 
 const path = require('path');
 const app = express();
-
+app.use(cors())
 dotenv.config();
 
 mongoose.connect(process.env.MONGODB_URI)
