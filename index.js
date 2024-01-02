@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const saucesRoutes = require('./routes/Images');
+const CommandesRoutes = require('./routes/Commande');
 var cors = require('cors')
 
 const path = require('path');
@@ -17,7 +18,6 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((error) => console.log('Connexion à MongoDB échouée !', error));
 
 app.use(express.json());
-
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -35,5 +35,6 @@ app.use((req, res, next) => {
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/', saucesRoutes);
+app.use('/api/commandes/', CommandesRoutes);
 
 module.exports = app;
