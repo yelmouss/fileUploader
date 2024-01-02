@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const saucesRoutes = require('./routes/Images');
+// const saucesRoutes = require('./routes/Images');
 const CommandesRoutes = require('./routes/Commande');
+const CategorieRoutes = require('./routes/Categories');
 var cors = require('cors')
 
 const path = require('path');
@@ -34,7 +35,12 @@ app.use((req, res, next) => {
 // Définissez le chemin du répertoire images pour servir des fichiers statiques
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-app.use('/api/', saucesRoutes);
+// app.use('/api/', saucesRoutes);
+
+app.use('/api/categories/', CategorieRoutes);
 app.use('/api/commandes/', CommandesRoutes);
+
+
+
 
 module.exports = app;
