@@ -67,4 +67,95 @@ exports.getOrderBySearchInput = async (req, res, next) => {
     }
 };
 
-  
+  // Modifier le statut d'une commande
+exports.updateOrderStatus = async (req, res, next) => {
+    const { orderId } = req.params;
+    const { newStatus } = req.body;
+
+    try {
+        const updatedOrder = await Commande.findByIdAndUpdate(
+            orderId,
+            { Status: newStatus },
+            { new: true }
+        );
+
+        if (!updatedOrder) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        res.status(200).json({
+            message: 'Order status updated successfully',
+            order: updatedOrder,
+        });
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+// Supprimer une commande
+exports.deleteOrder = async (req, res, next) => {
+    const { orderId } = req.params;
+
+    try {
+        const deletedOrder = await Commande.findOneAndDelete({ _id: orderId });
+
+        if (!deletedOrder) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        res.status(200).json({
+            message: 'Order deleted successfully',
+            order: deletedOrder,
+        });
+    } catch (error) {
+        console.error('Error deleting order:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+// Modifier le contenu d'une commande
+exports.updateOrderContent = async (req, res, next) => {
+    const { orderId } = req.params;
+    const { idProduits, quantites, prixUnitaire, prixTotal } = req.body;
+
+    try {
+        const updatedOrder = await Commande.findByIdAndUpdate(
+            orderId,
+            {
+                idProduits: idProduits,
+                quantites: quantites,
+                prixUnitaire: prixUnitaire,
+                prixTotal: prixTotal,
+            },
+            { new: true }
+        );
+
+        if (!updatedOrder) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        res.status(200).json({
+            message: 'Order content updated successfully',
+            order: updatedOrder,
+        });
+    } catch (error) {
+        console.error('Error updating order content:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+// Obtenir toutes les commandes
+exports.getAllOrders = async (req, res, next) => {
+    try {
+        const orders = await Commande.find();
+
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error('Error fetching all orders:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
